@@ -10,7 +10,9 @@ import {createTripEventsAddFormTemplate} from './view/trip-events-add-form.js';
 import {createTripEventsEditFormTemplate} from './view/trip-events-edit-form.js';
 import {generateTripEventsItem} from './mock/trip-events-item.js';
 
-const EVENTS_COUNT = 3;
+const EVENTS_COUNT = 20;
+const tripEvents = new Array(EVENTS_COUNT).fill().map(generateTripEventsItem);
+
 const pageHeaderContainer = document.querySelector(`.page-header`);
 const headerTripElement = pageHeaderContainer.querySelector(`.trip-main`);
 const headerTripControls = headerTripElement.querySelector(`.trip-controls`);
@@ -41,7 +43,7 @@ const tripEventsList = mainTripEventsContainer.querySelector(`.trip-events__list
 render(tripEventsList, createTripEventsEditFormTemplate(), `beforeend`);
 render(tripEventsList, createTripEventsAddFormTemplate(), `beforeend`);
 for (let i = 0; i < EVENTS_COUNT; i++) {
-  render(tripEventsList, createTripEventItemTemplate(), `beforeend`);
+  render(tripEventsList, createTripEventItemTemplate(tripEvents[i]), `beforeend`);
 }
 
 generateTripEventsItem();

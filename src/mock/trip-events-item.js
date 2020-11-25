@@ -24,7 +24,7 @@ const getRandomTimeGap = () => {
 // Функции по генерации данных
 
 const generateType = () => {
-  const EVENTS_TYPE = [`Taxi`, `Bus`, `Train`, `Ship`, `Transport`, `Drive`, `Flight`, `Check-in`, `Sightseeng`, `Restaurant`];
+  const EVENTS_TYPE = [`Taxi`, `Bus`, `Train`, `Ship`, `Transport`, `Drive`, `Flight`, `Check-in`, `Sightseeing`, `Restaurant`];
 
   const randomIndex = getRandomInteger(0, EVENTS_TYPE.length - 1);
   return EVENTS_TYPE[randomIndex];
@@ -60,7 +60,7 @@ const generatePhotos = () => {
 };
 
 const generateEventCost = () => {
-  const cost = getRandomInteger(100, 5000);
+  const cost = getRandomInteger(5, 700);
   return cost;
 };
 
@@ -76,7 +76,7 @@ const randomizeFavouriteFlag = () => {
 };
 
 const getEventStartTime = () => {
-  const gap = 24;
+  const gap = 72;
   const gapInHours = getRandomInteger(-gap, gap);
   return dayjs().add(gapInHours, `hour`).toDate();
 };
