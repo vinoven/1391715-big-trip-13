@@ -6,11 +6,11 @@ import {createTripFiltersTemplate} from './view/trip-filters.js';
 import {createTripEventsSortTemplate} from './view/trip-events-sort.js';
 import {createTripEventsListTemplate} from './view/trip-events-list.js';
 import {createTripEventItemTemplate} from './view/trip-events-item.js';
-import {createTripEventsAddFormTemplate} from './view/trip-events-add-form.js';
+// import {createTripEventsAddFormTemplate} from './view/trip-events-add-form.js';
 import {createTripEventsEditFormTemplate} from './view/trip-events-edit-form.js';
 import {generateTripEventsItem} from './mock/trip-events-item.js';
 
-const EVENTS_COUNT = 20;
+const EVENTS_COUNT = 15;
 const tripEvents = new Array(EVENTS_COUNT).fill().map(generateTripEventsItem);
 
 const pageHeaderContainer = document.querySelector(`.page-header`);
@@ -40,9 +40,9 @@ render(headerTripControls, createTripFiltersTemplate(), `beforeend`);
 render(mainTripEventsContainer, createTripEventsSortTemplate(), `beforeend`);
 render(mainTripEventsContainer, createTripEventsListTemplate(), `beforeend`);
 const tripEventsList = mainTripEventsContainer.querySelector(`.trip-events__list`);
-render(tripEventsList, createTripEventsEditFormTemplate(), `beforeend`);
-render(tripEventsList, createTripEventsAddFormTemplate(), `beforeend`);
-for (let i = 0; i < EVENTS_COUNT; i++) {
+render(tripEventsList, createTripEventsEditFormTemplate(tripEvents[0]), `beforeend`);
+// render(tripEventsList, createTripEventsAddFormTemplate(), `beforeend`);
+for (let i = 1; i < EVENTS_COUNT; i++) {
   render(tripEventsList, createTripEventItemTemplate(tripEvents[i]), `beforeend`);
 }
 

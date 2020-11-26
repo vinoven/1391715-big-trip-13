@@ -67,29 +67,38 @@ const generateEventCost = () => {
 const generateOffers = () => {
   const offers = [
     {
+      'id': `luggage`,
       'title': `Add luggage`,
-      'cost': 30
+      'offerCost': 30,
+      'isChecked': Boolean(getRandomInteger(0, 1))
     },
     {
+      'id': `comfort`,
       'title': `Switch to comfort`,
-      'cost': 100
+      'offerCost': 100,
+      'isChecked': Boolean(getRandomInteger(0, 1))
     },
     {
+      'id': `meal`,
       'title': `Add a meal`,
-      'cost': 15
+      'offerCost': 15,
+      'isChecked': Boolean(getRandomInteger(0, 1))
     },
     {
+      'id': `seats`,
       'title': `Chose seats`,
-      'cost': 5
+      'offerCost': 5,
+      'isChecked': Boolean(getRandomInteger(0, 1))
     },
     {
+      'id': `train`,
       'title': `Travel by train`,
-      'cost': 40
+      'offerCost': 40,
+      'isChecked': Boolean(getRandomInteger(0, 1))
     },
   ];
-  const numberOfOffers = getRandomInteger(0, offers.length - 1);
-  const generatedOffers = shuffleArray(offers).slice(0, numberOfOffers);
-  return generatedOffers;
+
+  return offers;
 };
 
 const randomizeFavouriteFlag = () => {
