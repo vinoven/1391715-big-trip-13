@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 
 export const createTripEventItemTemplate = (tripEvent) => {
 
-  let {type, destination, eventStartTime, eventEndTime, cost, isFavourite} = tripEvent;
+  let {type, destination, eventStartTime, eventEndTime, cost, offers, isFavourite} = tripEvent;
 
   const parseDuration = () => {
 
@@ -45,7 +45,19 @@ export const createTripEventItemTemplate = (tripEvent) => {
     return parsedDuration.join(` `).trim();
   };
 
+  const renderOffers = () => {
+    return offers.map((offer) =>
+      `
+      <li class="event__offer">
+          <span class="event__offer-title">${offer.title}</span>
+          &plus;&euro;&nbsp;
+          <span class="event__offer-price">${offer.cost}</span>
+        </li>
+    `).join(``);
+  };
+
   const parsedDuration = parseDuration();
+  const eventOffers = renderOffers();
   const favouriteClassName = isFavourite ? `event__favorite-btn--active` : ``;
 
   return `
@@ -69,11 +81,7 @@ export const createTripEventItemTemplate = (tripEvent) => {
       </p>
       <h4 class="visually-hidden">Offers:</h4>
       <ul class="event__selected-offers">
-        <li class="event__offer">
-          <span class="event__offer-title">Order Uber</span>
-          &plus;&euro;&nbsp;
-          <span class="event__offer-price">20</span>
-        </li>
+        ${eventOffers}
       </ul>
       <button class="event__favorite-btn ${favouriteClassName}" type="button">
         <span class="visually-hidden">Add to favorite</span>

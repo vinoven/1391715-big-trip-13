@@ -65,7 +65,28 @@ const generateEventCost = () => {
 };
 
 const generateOffers = () => {
-  const offers = [`Add luggage`, `Switch to comfort`, `Add meal`, `Chose seats`, `Travel by train`];
+  const offers = [
+    {
+      'title': `Add luggage`,
+      'cost': 30
+    },
+    {
+      'title': `Switch to comfort`,
+      'cost': 100
+    },
+    {
+      'title': `Add a meal`,
+      'cost': 15
+    },
+    {
+      'title': `Chose seats`,
+      'cost': 5
+    },
+    {
+      'title': `Travel by train`,
+      'cost': 40
+    },
+  ];
   const numberOfOffers = getRandomInteger(0, offers.length - 1);
   const generatedOffers = shuffleArray(offers).slice(0, numberOfOffers);
   return generatedOffers;
