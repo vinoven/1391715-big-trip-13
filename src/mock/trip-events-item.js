@@ -31,7 +31,7 @@ const generateType = () => {
 };
 
 const generateDestination = () => {
-  const PLACES_OF_DESTINATION = [`Amsterdam`, `Geneva`, `Chamonix`];
+  const PLACES_OF_DESTINATION = [`Amsterdam`, `Geneva`, `Chamonix`, `Köln`];
 
   const randomIndex = getRandomInteger(0, PLACES_OF_DESTINATION.length - 1);
   return PLACES_OF_DESTINATION[randomIndex];
