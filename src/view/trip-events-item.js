@@ -2,13 +2,13 @@ import dayjs from "dayjs";
 
 export const createTripEventItemTemplate = (tripEvent) => {
 
-  const {type, destination, eventStartTime, eventEndTime, cost, offers, isFavourite} = tripEvent;
+  const {type, destination, duration, eventStartTime, eventEndTime, cost, offers, isFavourite} = tripEvent;
 
   const parseDuration = () => {
 
-    const days = (dayjs(eventEndTime).diff(dayjs(eventStartTime), `day`));
-    const hours = (dayjs(eventEndTime).diff(dayjs(eventStartTime), `hour`)) % 24;
-    const minutes = (dayjs(eventEndTime).diff(dayjs(eventStartTime), `minute`)) % 60;
+    const minutes = duration % 60;
+    const hours = parseInt(duration / 60 % 24, 10);
+    const days = parseInt(duration / 60 / 24, 10);
 
     let formatedDays = ``;
     let formatedHours = ``;

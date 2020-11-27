@@ -135,6 +135,7 @@ export const generateTripEventsItem = () => {
     destination,
     description,
     photos,
+    duration,
     eventStartTime,
     eventEndTime,
     cost,
