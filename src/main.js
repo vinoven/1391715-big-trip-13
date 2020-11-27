@@ -11,7 +11,7 @@ import {createTripEventsEditFormTemplate} from './view/trip-events-edit-form.js'
 import {generateTripEventsItem} from './mock/trip-events-item.js';
 
 const EVENTS_COUNT = 15;
-const tripEvents = new Array(EVENTS_COUNT).fill().map(generateTripEventsItem);
+const tripEvents = new Array(EVENTS_COUNT).fill().map(generateTripEventsItem).sort((a, b) => a.eventStartTime - b.eventStartTime);
 
 const pageHeaderContainer = document.querySelector(`.page-header`);
 const headerTripElement = pageHeaderContainer.querySelector(`.trip-main`);
