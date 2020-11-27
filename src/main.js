@@ -28,7 +28,7 @@ const render = (container, template, place) => {
 render(headerTripElement, createTripSectionTemplate(), `afterbegin`);
 const headerTripInfoContainer = headerTripElement.querySelector(`.trip-main__trip-info`);
 render(headerTripInfoContainer, createTripInfoTemplate(tripEvents), `beforeend`);
-render(headerTripInfoContainer, createTripCostTemplate(), `beforeend`);
+render(headerTripInfoContainer, createTripCostTemplate(tripEvents), `beforeend`);
 
 // trip controls components
 
