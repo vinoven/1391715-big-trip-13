@@ -6,7 +6,6 @@ import {createTripFiltersTemplate} from './view/trip-filters.js';
 import {createTripEventsSortTemplate} from './view/trip-events-sort.js';
 import {createTripEventsListTemplate} from './view/trip-events-list.js';
 import {createTripEventItemTemplate} from './view/trip-events-item.js';
-// import {createTripEventsAddFormTemplate} from './view/trip-events-add-form.js';
 import {createTripEventsEditFormTemplate} from './view/trip-events-edit-form.js';
 import {generateTripEventsItem} from './mock/trip-events-item.js';
 

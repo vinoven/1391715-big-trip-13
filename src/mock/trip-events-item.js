@@ -1,5 +1,11 @@
 import dayjs from "dayjs";
 
+const EVENTS_TYPE = [`Taxi`, `Bus`, `Train`, `Ship`, `Transport`, `Drive`, `Flight`, `Check-in`, `Sightseeing`, `Restaurant`];
+const PLACES_OF_DESTINATION = [`Amsterdam`, `Geneva`, `Chamonix`, `Köln`];
+const DESCRIPTION_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus`;
+const SENTENCES_MIN_AMOUNT = 1;
+const SENTENCES_MAX_AMOUNT = 5;
+
 // Служебные функции
 const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -24,24 +30,16 @@ const getRandomTimeGap = () => {
 // Функции по генерации данных
 
 const generateType = () => {
-  const EVENTS_TYPE = [`Taxi`, `Bus`, `Train`, `Ship`, `Transport`, `Drive`, `Flight`, `Check-in`, `Sightseeing`, `Restaurant`];
-
   const randomIndex = getRandomInteger(0, EVENTS_TYPE.length - 1);
   return EVENTS_TYPE[randomIndex];
 };
 
 const generateDestination = () => {
-  const PLACES_OF_DESTINATION = [`Amsterdam`, `Geneva`, `Chamonix`, `Köln`];
-
   const randomIndex = getRandomInteger(0, PLACES_OF_DESTINATION.length - 1);
   return PLACES_OF_DESTINATION[randomIndex];
 };
 
 const generateDescription = () => {
-  const DESCRIPTION_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus`;
-  const SENTENCES_MIN_AMOUNT = 1;
-  const SENTENCES_MAX_AMOUNT = 5;
-
   const descriptionSentences = DESCRIPTION_TEXT.split(`. `);
   const amountOfSentences = getRandomInteger(SENTENCES_MIN_AMOUNT, SENTENCES_MAX_AMOUNT);
   const description = shuffleArray(descriptionSentences).slice(0, amountOfSentences).join(`. `) + `.`;
