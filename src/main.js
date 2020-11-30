@@ -8,7 +8,7 @@ import {createTripEventsListTemplate} from './view/trip-events-list.js';
 import {createTripEventItemTemplate} from './view/trip-events-item.js';
 import {createTripEventsEditFormTemplate} from './view/trip-events-edit-form.js';
 import {generateTripEventsItem} from './mock/trip-events-item.js';
-import {renderTemplate} from "../util.js";
+import {renderTemplate} from "./util.js";
 
 const EVENTS_COUNT = 15;
 const tripEvents = new Array(EVENTS_COUNT).fill().map(generateTripEventsItem).sort((a, b) => a.eventStartTime - b.eventStartTime);

@@ -15,7 +15,7 @@ export const renderElement = (container, element, position) => {
 };
 
 export const renderTemplate = (container, template, position) => {
-  container.inserAdjacentHTML(position, template);
+  container.insertAdjacentHTML(position, template);
 };
 
 export const createElement = (template) => {
