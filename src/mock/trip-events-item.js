@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
-import {getRandomInteger} from "../util.js";
-import {shuffleArray} from "../util.js";
+import {getRandomInteger, shuffleArray} from "../util.js";
 
 const EVENTS_TYPE = [`Taxi`, `Bus`, `Train`, `Ship`, `Transport`, `Drive`, `Flight`, `Check-in`, `Sightseeing`, `Restaurant`];
 const PLACES_OF_DESTINATION = [`Amsterdam`, `Geneva`, `Chamonix`, `Köln`];

@@ -3,7 +3,7 @@ export const RenderPosition = {
   BEFOREEND: `beforeend`
 };
 
-export const renderElement = (container, element, position) => {
+export const render = (container, element, position) => {
   switch (position) {
     case RenderPosition.AFTERBEGIN:
       container.prepend(element);
@@ -14,15 +14,18 @@ export const renderElement = (container, element, position) => {
   }
 };
 
-export const renderTemplate = (container, template, position) => {
-  container.insertAdjacentHTML(position, template);
-};
-
 export const createElement = (template) => {
   const newElement = document.createElement(`div`);
-  newElement.innerHTML(template);
+  newElement.innerHTML = template.trim();
 
   return newElement.firstChild;
+};
+
+export const createMultipleElements = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template.trim();
+
+  return newElement;
 };
 
 export const getRandomInteger = (a = 0, b = 1) => {

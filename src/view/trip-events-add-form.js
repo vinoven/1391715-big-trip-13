@@ -1,4 +1,6 @@
-export const createTripEventsAddFormTemplate = () => {
+import {createElement} from '../util.js';
+
+const createTripEventsAddFormTemplate = () => {
   return `
   <li class="trip-events__item">
   <form class="event event--edit" action="#" method="post">
@@ -169,3 +171,24 @@ export const createTripEventsAddFormTemplate = () => {
 </li>
   `;
 };
+
+export default class TripEventsAddForm {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTripEventsAddFormTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
