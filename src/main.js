@@ -6,7 +6,7 @@ import TripEventsFiltersView from './view/trip-events-filters.js';
 import TripEventsSortView from './view/trip-events-sort.js';
 import TripEventsListView from './view/trip-events-list.js';
 import TripEventsItemView from './view/trip-events-item.js';
-// import TripEventsEditFormView from './view/trip-events-edit-form.js';
+import TripEventsEditFormView from './view/trip-events-edit-form.js';
 import {generateTripEventsItem} from './mock/trip-events-item.js';
 import {render, RenderPosition} from "./util.js";
 
@@ -32,12 +32,40 @@ render(headerTripControls, new TripMenuView().getElement(), RenderPosition.BEFOR
 render(headerTripControls, new TripEventsFiltersView().getElement(), RenderPosition.BEFOREEND);
 
 // trip events components
-
+const tripEventsListComponent = new TripEventsListView();
 render(mainTripEventsContainer, new TripEventsSortView().getElement(), RenderPosition.BEFOREEND);
-render(mainTripEventsContainer, new TripEventsListView().getElement(), RenderPosition.BEFOREEND);
-const tripEventsList = mainTripEventsContainer.querySelector(`.trip-events__list`);
-for (let i = 1; i < EVENTS_COUNT; i++) {
-  render(tripEventsList, new TripEventsItemView(tripEvents[i]).getElement(), RenderPosition.BEFOREEND);
-}
+render(mainTripEventsContainer, tripEventsListComponent.getElement(), RenderPosition.BEFOREEND);
 
-generateTripEventsItem();
+const renderTripEvent = (eventsListElement, tripEvent) => {
+
+  const tripEventComponent = new TripEventsItemView(tripEvent);
+  const tripEventEditComponent = new TripEventsEditFormView(tripEvent);
+  const replaceCardToEditForm = () => {
+    eventsListElement.replaceChild(tripEventEditComponent.getElement(), tripEventComponent.getElement());
+  };
+
+  const replaceEditFormToCard = () => {
+    eventsListElement.replaceChild(tripEventComponent.getElement(), tripEventEditComponent.getElement());
+  };
+
+  const onEventCardRollupButtonClick = () => {
+    replaceCardToEditForm();
+  };
+
+  const onEventEditFormRollupButtonClick = () => {
+    replaceEditFormToCard();
+  };
+
+  const onEventEditFormSubmit = (evt) => {
+    evt.preventDefault();
+    replaceEditFormToCard();
+  };
+
+  tripEventComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, onEventCardRollupButtonClick);
+  tripEventEditComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, onEventEditFormRollupButtonClick);
+  tripEventEditComponent.getElement().querySelector(`form`).addEventListener(`submit`, onEventEditFormSubmit);
+
+  render(eventsListElement, tripEventComponent.getElement(), RenderPosition.BEFOREEND);
+};
+
+tripEvents.forEach((tripEvent) => renderTripEvent(tripEventsListComponent.getElement(), tripEvent));
