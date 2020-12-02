@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
-export const createTripInfoTemplate = (tripEvents) => {
+import {createElement} from '../util.js';
+
+const createTripInfoTemplate = (tripEvents) => {
 
   const renderTripTitle = () => {
     const tripRouteSet = new Set(tripEvents.map((tripEvent) => {
@@ -25,3 +27,25 @@ export const createTripInfoTemplate = (tripEvents) => {
   <p class="trip-info__dates">${dayjs(tripStartDate).format(`MMM DD`)}&nbsp;&mdash;&nbsp;${dayjs(tripEndDate).format(`MMM DD`)}</p>
 </div>`;
 };
+
+export default class TripInfo {
+  constructor(tripEvents) {
+    this._tripEvents = tripEvents;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTripInfoTemplate(this._tripEvents);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

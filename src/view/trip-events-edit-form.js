@@ -1,8 +1,24 @@
 import dayjs from "dayjs";
+import {createElement} from '../util.js';
 
-export const createTripEventsEditFormTemplate = (tripEvent) => {
+const createTripEventsEditFormTemplate = (tripEvent) => {
 
   const {type, destination, description, eventStartTime, eventEndTime, cost, offers, photos} = tripEvent;
+
+  const renderAvailableOffers = () => {
+    return offers.map(({id, title, offerCost, isChecked}) => `
+    <div class="event__offer-selector">
+      <input class="event__offer-checkbox  visually-hidden" id="event-offer-${id}-1" type="checkbox" name="event-offer-${id}" ${isChecked ? `checked` : ``}>
+      <label class="event__offer-label" for="event-offer-${id}-1">
+        <span class="event__offer-title">${title}</span>
+        &plus;&euro;&nbsp;
+        <span class="event__offer-price">${offerCost}</span>
+      </label>
+    </div>`)
+      .join(``);
+  };
+
+  const availableOffers = renderAvailableOffers();
 
   const renderOffers = () => {
     if (offers.length === 0) {
@@ -13,19 +29,9 @@ export const createTripEventsEditFormTemplate = (tripEvent) => {
     <section class="event__section  event__section--offers">
       <h3 class="event__section-title  event__section-title--offers">Offers</h3>
       <div class="event__available-offers">
-
-      ${offers.map(({id, title, offerCost, isChecked}) => `
-      <div class="event__offer-selector">
-      <input class="event__offer-checkbox  visually-hidden" id="event-offer-${id}-1" type="checkbox" name="event-offer-${id}" ${isChecked ? `checked` : ``}>
-        <label class="event__offer-label" for="event-offer-${id}-1">
-          <span class="event__offer-title">${title}</span>
-      &plus;&euro;&nbsp;
-      <span class="event__offer-price">${offerCost}</span>
-        </label>
-    </div>`).join(``)}
-
-  </div >
-</section >
+        ${availableOffers}
+      </div >
+    </section >
 `;
   };
 
@@ -43,7 +49,6 @@ export const createTripEventsEditFormTemplate = (tripEvent) => {
 
   const photosTemplate = renderPhotos();
   const offersTemplate = renderOffers();
-
   return `
   <li class="trip-events__item">
   <form class="event event--edit" action="#" method="post">
@@ -158,3 +163,25 @@ export const createTripEventsEditFormTemplate = (tripEvent) => {
 </li>
   `;
 };
+
+export default class TripEventsEditForm {
+  constructor(tripEvents) {
+    this._tripEvents = tripEvents;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTripEventsEditFormTemplate(this._tripEvents);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
