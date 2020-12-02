@@ -42,6 +42,7 @@ const renderTripEvent = (eventsListElement, tripEvent) => {
   const tripEventEditComponent = new TripEventsEditFormView(tripEvent);
   const replaceCardToEditForm = () => {
     eventsListElement.replaceChild(tripEventEditComponent.getElement(), tripEventComponent.getElement());
+    document.addEventListener(`keydown`, onDocumentEscapePress);
   };
 
   const replaceEditFormToCard = () => {
@@ -59,6 +60,13 @@ const renderTripEvent = (eventsListElement, tripEvent) => {
   const onEventEditFormSubmit = (evt) => {
     evt.preventDefault();
     replaceEditFormToCard();
+  };
+
+  const onDocumentEscapePress = (evt) => {
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      replaceEditFormToCard();
+      document.removeEventListener(`keydown`, onDocumentEscapePress);
+    }
   };
 
   tripEventComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, onEventCardRollupButtonClick);
