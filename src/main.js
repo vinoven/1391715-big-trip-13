@@ -79,11 +79,11 @@ const renderTripEvents = () => {
   tripEvents.forEach((tripEvent) => renderTripEvent(tripEventsListComponent.getElement(), tripEvent));
 };
 
+renderTripControls();
+
 if (tripEvents.length > 0) {
   renderOverallTripInfo();
-  renderTripControls();
   renderTripEvents();
 } else {
-  renderTripControls();
   render(mainTripEventsContainer, new TripEventsEmptyListView().getElement(), RenderPosition.BEFOREEND);
 }
