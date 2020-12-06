@@ -1,4 +1,4 @@
-import {createElement} from '../util.js';
+import AbstractView from './abstract.js';
 
 const createTripCostTemplate = (tripEvents) => {
   const initialValue = 10;
@@ -22,24 +22,13 @@ const createTripCostTemplate = (tripEvents) => {
 </p>`;
 };
 
-export default class TripCost {
+export default class TripCost extends AbstractView {
   constructor(tripEvents) {
+    super();
     this._tripEvents = tripEvents;
-    this._element = null;
   }
 
   getTemplate() {
     return createTripCostTemplate(this._tripEvents);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

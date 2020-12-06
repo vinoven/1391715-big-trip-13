@@ -1,3 +1,4 @@
+import AbstractView from './abstract.js';
 import {createMultipleElements} from '../util.js';
 
 const createTripEventsEmptyListTemplate = () => {
@@ -7,11 +8,7 @@ const createTripEventsEmptyListTemplate = () => {
   ;
 };
 
-export default class TripEventsEmptyList {
-  constructor() {
-    this._element = null;
-  }
-
+export default class TripEventsEmptyList extends AbstractView {
   getTemplate() {
     return createTripEventsEmptyListTemplate();
   }
@@ -21,9 +18,5 @@ export default class TripEventsEmptyList {
       this._element = createMultipleElements(this.getTemplate());
     }
     return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

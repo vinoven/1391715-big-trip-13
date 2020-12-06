@@ -1,3 +1,4 @@
+import AbstractView from './abstract.js';
 import {createMultipleElements} from '../util.js';
 
 const createTripEventsFiltersTemplate = () => {
@@ -25,11 +26,7 @@ const createTripEventsFiltersTemplate = () => {
   ;
 };
 
-export default class TripEventsFilters {
-  constructor() {
-    this._element = null;
-  }
-
+export default class TripEventsFilters extends AbstractView {
   getTemplate() {
     return createTripEventsFiltersTemplate();
   }
@@ -39,10 +36,6 @@ export default class TripEventsFilters {
       this._element = createMultipleElements(this.getTemplate());
     }
     return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 
