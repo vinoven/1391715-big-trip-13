@@ -1,4 +1,4 @@
-import {createMultipleElements} from '../util.js';
+import {createMultipleElements} from '../utils/render.js';
 import AbstractView from './abstract.js';
 
 const createTripMenuTemplate = () => {

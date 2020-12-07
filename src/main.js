@@ -9,7 +9,7 @@ import TripEventsEmptyListView from './view/trip-events-empty-list.js';
 import TripEventsItemView from './view/trip-events-item.js';
 import TripEventsEditFormView from './view/trip-events-edit-form.js';
 import {generateTripEventsItem} from './mock/trip-events-item.js';
-import {render, RenderPosition} from "./util.js";
+import {render, RenderPosition} from "./utils/render.js";
 
 const EVENTS_COUNT = 15;
 const tripEvents = new Array(EVENTS_COUNT).fill().map(generateTripEventsItem).sort((a, b) => a.eventStartTime - b.eventStartTime);

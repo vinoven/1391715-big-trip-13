@@ -1,5 +1,5 @@
 import AbstractView from './abstract.js';
-import {createMultipleElements} from '../util.js';
+import {createMultipleElements} from '../utils/render.js';
 
 const createTripEventsEmptyListTemplate = () => {
   return `
