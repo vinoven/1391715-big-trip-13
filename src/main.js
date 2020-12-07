@@ -41,8 +41,7 @@ const renderTripEvent = (eventsListElement, tripEvent) => {
     replaceEditFormToCard();
   };
 
-  const onEventEditFormSubmit = (evt) => {
-    evt.preventDefault();
+  const onEventEditFormSubmit = () => {
     replaceEditFormToCard();
   };
 
@@ -53,9 +52,9 @@ const renderTripEvent = (eventsListElement, tripEvent) => {
     }
   };
 
-  tripEventComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, onEventCardRollupButtonClick);
-  tripEventEditComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, onEventEditFormRollupButtonClick);
-  tripEventEditComponent.getElement().querySelector(`form`).addEventListener(`submit`, onEventEditFormSubmit);
+  tripEventComponent.setClickHandler(onEventCardRollupButtonClick);
+  tripEventEditComponent.setEditClickHandler(onEventEditFormRollupButtonClick);
+  tripEventEditComponent.setFormSubmitHandler(onEventEditFormSubmit);
 
   render(eventsListElement, tripEventComponent.getElement(), RenderPosition.BEFOREEND);
 };
