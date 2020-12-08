@@ -9,7 +9,7 @@ import TripEventsEmptyListView from './view/trip-events-empty-list.js';
 import TripEventsItemView from './view/trip-events-item.js';
 import TripEventsEditFormView from './view/trip-events-edit-form.js';
 import {generateTripEventsItem} from './mock/trip-events-item.js';
-import {render, RenderPosition} from "./utils/render.js";
+import {render, replace, RenderPosition} from "./utils/render.js";
 
 const EVENTS_COUNT = 15;
 const tripEvents = new Array(EVENTS_COUNT).fill().map(generateTripEventsItem).sort((a, b) => a.eventStartTime - b.eventStartTime);
@@ -25,12 +25,12 @@ const renderTripEvent = (eventsListElement, tripEvent) => {
   const tripEventComponent = new TripEventsItemView(tripEvent);
   const tripEventEditComponent = new TripEventsEditFormView(tripEvent);
   const replaceCardToEditForm = () => {
-    eventsListElement.replaceChild(tripEventEditComponent, tripEventComponent);
+    replace(tripEventEditComponent, tripEventComponent);
     document.addEventListener(`keydown`, onDocumentEscapePress);
   };
 
   const replaceEditFormToCard = () => {
-    eventsListElement.replaceChild(tripEventComponent, tripEventEditComponent);
+    replace(tripEventComponent, tripEventEditComponent);
   };
 
   const onEventCardRollupButtonClick = () => {
