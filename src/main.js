@@ -9,7 +9,7 @@ import TripEventsEmptyListView from './view/trip-events-empty-list.js';
 import TripEventsItemView from './view/trip-events-item.js';
 import TripEventsEditFormView from './view/trip-events-edit-form.js';
 import {generateTripEventsItem} from './mock/trip-events-item.js';
-import {render, RenderPosition} from "./util.js";
+import {render, replace, RenderPosition} from "./utils/render.js";
 
 const EVENTS_COUNT = 15;
 const tripEvents = new Array(EVENTS_COUNT).fill().map(generateTripEventsItem).sort((a, b) => a.eventStartTime - b.eventStartTime);
@@ -25,12 +25,12 @@ const renderTripEvent = (eventsListElement, tripEvent) => {
   const tripEventComponent = new TripEventsItemView(tripEvent);
   const tripEventEditComponent = new TripEventsEditFormView(tripEvent);
   const replaceCardToEditForm = () => {
-    eventsListElement.replaceChild(tripEventEditComponent.getElement(), tripEventComponent.getElement());
+    replace(tripEventEditComponent, tripEventComponent);
     document.addEventListener(`keydown`, onDocumentEscapePress);
   };
 
   const replaceEditFormToCard = () => {
-    eventsListElement.replaceChild(tripEventComponent.getElement(), tripEventEditComponent.getElement());
+    replace(tripEventComponent, tripEventEditComponent);
   };
 
   const onEventCardRollupButtonClick = () => {
@@ -41,8 +41,7 @@ const renderTripEvent = (eventsListElement, tripEvent) => {
     replaceEditFormToCard();
   };
 
-  const onEventEditFormSubmit = (evt) => {
-    evt.preventDefault();
+  const onEventEditFormSubmit = () => {
     replaceEditFormToCard();
   };
 
@@ -53,37 +52,37 @@ const renderTripEvent = (eventsListElement, tripEvent) => {
     }
   };
 
-  tripEventComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, onEventCardRollupButtonClick);
-  tripEventEditComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, onEventEditFormRollupButtonClick);
-  tripEventEditComponent.getElement().querySelector(`form`).addEventListener(`submit`, onEventEditFormSubmit);
+  tripEventComponent.setClickHandler(onEventCardRollupButtonClick);
+  tripEventEditComponent.setEditClickHandler(onEventEditFormRollupButtonClick);
+  tripEventEditComponent.setFormSubmitHandler(onEventEditFormSubmit);
 
-  render(eventsListElement, tripEventComponent.getElement(), RenderPosition.BEFOREEND);
+  render(eventsListElement, tripEventComponent, RenderPosition.BEFOREEND);
 };
 
 const renderOverallTripInfo = () => {
-  render(headerTripElement, new TripSectionView().getElement(), RenderPosition.AFTERBEGIN);
+  render(headerTripElement, new TripSectionView(), RenderPosition.AFTERBEGIN);
   const headerTripInfoContainer = headerTripElement.querySelector(`.trip-main__trip-info`);
-  render(headerTripInfoContainer, new TripInfoView(tripEvents).getElement(), RenderPosition.BEFOREEND);
-  render(headerTripInfoContainer, new TripCostView(tripEvents).getElement(), RenderPosition.BEFOREEND);
+  render(headerTripInfoContainer, new TripInfoView(tripEvents), RenderPosition.BEFOREEND);
+  render(headerTripInfoContainer, new TripCostView(tripEvents), RenderPosition.BEFOREEND);
 };
 
 const renderTripControls = () => {
-  render(headerTripControls, new TripMenuView().getElement(), RenderPosition.BEFOREEND);
-  render(headerTripControls, new TripEventsFiltersView().getElement(), RenderPosition.BEFOREEND);
+  render(headerTripControls, new TripMenuView(), RenderPosition.BEFOREEND);
+  render(headerTripControls, new TripEventsFiltersView(), RenderPosition.BEFOREEND);
 };
 
 const renderTripEvents = () => {
   const tripEventsListComponent = new TripEventsListView();
-  render(mainTripEventsContainer, new TripEventsSortView().getElement(), RenderPosition.BEFOREEND);
-  render(mainTripEventsContainer, tripEventsListComponent.getElement(), RenderPosition.BEFOREEND);
-  tripEvents.forEach((tripEvent) => renderTripEvent(tripEventsListComponent.getElement(), tripEvent));
+  render(mainTripEventsContainer, new TripEventsSortView(), RenderPosition.BEFOREEND);
+  render(mainTripEventsContainer, tripEventsListComponent, RenderPosition.BEFOREEND);
+  tripEvents.forEach((tripEvent) => renderTripEvent(tripEventsListComponent, tripEvent));
 };
+
+renderTripControls();
 
 if (tripEvents.length > 0) {
   renderOverallTripInfo();
-  renderTripControls();
   renderTripEvents();
 } else {
-  renderTripControls();
-  render(mainTripEventsContainer, new TripEventsEmptyListView().getElement(), RenderPosition.BEFOREEND);
+  render(mainTripEventsContainer, new TripEventsEmptyListView(), RenderPosition.BEFOREEND);
 }

@@ -1,4 +1,5 @@
-import {createMultipleElements} from '../util.js';
+import {createMultipleElements} from '../utils/render.js';
+import AbstractView from './abstract.js';
 
 const createTripMenuTemplate = () => {
   return `
@@ -10,11 +11,7 @@ const createTripMenuTemplate = () => {
   ;
 };
 
-export default class TripMenu {
-  constructor() {
-    this._element = null;
-  }
-
+export default class TripMenu extends AbstractView {
   getTemplate() {
     return createTripMenuTemplate();
   }
@@ -24,9 +21,5 @@ export default class TripMenu {
       this._element = createMultipleElements(this.getTemplate());
     }
     return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

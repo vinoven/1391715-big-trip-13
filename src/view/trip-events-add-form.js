@@ -1,4 +1,4 @@
-import {createElement} from '../util.js';
+import AbstractView from './abstract.js';
 
 const createTripEventsAddFormTemplate = () => {
   return `
@@ -172,23 +172,8 @@ const createTripEventsAddFormTemplate = () => {
   `;
 };
 
-export default class TripEventsAddForm {
-  constructor() {
-    this._element = null;
-  }
-
+export default class TripEventsAddForm extends AbstractView {
   getTemplate() {
     return createTripEventsAddFormTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

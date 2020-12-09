@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import {createElement} from '../util.js';
+import AbstractView from './abstract.js';
 
 const createTripEventItemTemplate = (tripEvent) => {
   const {type, destination, duration, eventStartTime, eventEndTime, cost, offers, isFavourite} = tripEvent;
@@ -97,24 +97,23 @@ const createTripEventItemTemplate = (tripEvent) => {
   `;
 };
 
-export default class TripEventsItem {
+export default class TripEventsItem extends AbstractView {
   constructor(tripEvent) {
+    super();
     this._tripEvent = tripEvent;
-    this._element = null;
+    this._clickHandler = this._clickHandler.bind(this);
+  }
+
+  _clickHandler() {
+    this._callback.click();
   }
 
   getTemplate() {
     return createTripEventItemTemplate(this._tripEvent);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  setClickHandler(callback) {
+    this._callback.click = callback;
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._clickHandler);
   }
 }
