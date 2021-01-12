@@ -1,6 +1,6 @@
 import TripEventsItemView from '../view/trip-events-item.js';
 import TripEventsEditFormView from '../view/trip-events-edit-form.js';
-import {render, replace, RenderPosition} from "../utils/render.js";
+import {render, replace, remove, RenderPosition} from "../utils/render.js";
 
 
 export default class TripEvent {
@@ -18,6 +18,10 @@ export default class TripEvent {
 
   init(tripEvent) {
     this._tripEvent = tripEvent;
+
+    const prevTripEventComponent = this._tripEventComponent;
+    const prevTripEventEditComponent = this._tripEventEditComponent;
+
     this._tripEventComponent = new TripEventsItemView(tripEvent);
     this._tripEventEditComponent = new TripEventsEditFormView(tripEvent);
 
@@ -25,7 +29,26 @@ export default class TripEvent {
     this._tripEventEditComponent.setEditClickHandler(this._handleCloseClick);
     this._tripEventEditComponent.setFormSubmitHandler(this._handleFormSubmit);
 
-    render(this._eventsList, this._tripEventComponent, RenderPosition.BEFOREEND);
+    if (prevTripEventComponent === null || prevTripEventEditComponent === null) {
+      render(this._eventsList, this._tripEventComponent, RenderPosition.BEFOREEND);
+      return;
+    }
+
+    if (this._eventsList.getElement().contains(prevTripEventComponent.getElement())) {
+      replace(this._tripEventComponent, prevTripEventComponent);
+    }
+
+    if (this._eventsList.getElement().contains(prevTripEventEditComponent.getElement())) {
+      replace(this._tripEventEditComponent, prevTripEventEditComponent);
+    }
+
+    remove(prevTripEventComponent);
+    remove(prevTripEventEditComponent);
+  }
+
+  destroy() {
+    remove(this._tripEventComponent);
+    remove(this._tripEventEditComponent);
   }
 
   _replaceCardToForm() {
