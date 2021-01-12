@@ -4,8 +4,9 @@ import {render, replace, remove, RenderPosition} from "../utils/render.js";
 
 
 export default class TripEvent {
-  constructor(eventsList) {
+  constructor(eventsList, changeData) {
     this._eventsList = eventsList;
+    this._changeData = changeData;
 
     this._tripEventComponent = null;
     this._tripEventEditComponent = null;
@@ -13,6 +14,7 @@ export default class TripEvent {
     this._handleEscapePress = this._handleEscapePress.bind(this);
     this._handleShowClick = this._handleShowClick.bind(this);
     this._handleCloseClick = this._handleCloseClick.bind(this);
+    this._handleFavouriteClick = this._handleFavouriteClick.bind(this);
     this._handleFormSubmit = this._handleFormSubmit.bind(this);
   }
 
@@ -26,6 +28,7 @@ export default class TripEvent {
     this._tripEventEditComponent = new TripEventsEditFormView(tripEvent);
 
     this._tripEventComponent.setClickHandler(this._handleShowClick);
+    this._tripEventComponent.setFavouriteClickHandler(this._handleFavouriteClick);
     this._tripEventEditComponent.setEditClickHandler(this._handleCloseClick);
     this._tripEventEditComponent.setFormSubmitHandler(this._handleFormSubmit);
 
@@ -75,7 +78,20 @@ export default class TripEvent {
     this._replaceFormToCard();
   }
 
+  _handleFavouriteClick() {
+    this._changeData(
+        Object.assign(
+            {},
+            this._tripEvent,
+            {
+              isFavourite: !this._tripEvent.isFavourite
+            }
+        )
+    );
+  }
+
   _handleFormSubmit() {
+    // this._changeData();
     this._replaceFormToCard();
   }
 }

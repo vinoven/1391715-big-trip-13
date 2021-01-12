@@ -2,13 +2,18 @@ import TripEventsListView from '../view/trip-events-list.js';
 import TripEventsSortView from '../view/trip-events-sort.js';
 import TripEventPresenter from './event.js';
 import {render, RenderPosition} from "../utils/render.js";
+import {updateItem} from "../utils/common.js";
 
 
 export default class Trip {
   constructor(tripContainer) {
     this._tripContainer = tripContainer;
+    this._eventPresenter = {};
+
     this._eventsListComponent = new TripEventsListView();
     this._eventsSortComponent = new TripEventsSortView();
+
+    this._tripEventChangeHandler = this._tripEventChangeHandler.bind(this);
   }
 
   init(tripEvents) {
@@ -16,13 +21,19 @@ export default class Trip {
     this._renderTrip();
   }
 
+  _tripEventChangeHandler(updatedEvent) {
+    this._tripEvents = updateItem(this._tripEvents, updatedEvent);
+    this._eventPresenter[updatedEvent.id].init(updatedEvent);
+  }
+
   _renderEventsList() {
     render(this._tripContainer, this._eventsListComponent, RenderPosition.BEFOREEND);
   }
 
   _renderEvent(tripEvent) {
-    const tripEventPresenter = new TripEventPresenter(this._eventsListComponent);
+    const tripEventPresenter = new TripEventPresenter(this._eventsListComponent, this._tripEventChangeHandler);
     tripEventPresenter.init(tripEvent);
+    this._eventPresenter[tripEvent.id] = tripEventPresenter;
   }
 
   _renderEvents() {
@@ -37,5 +48,13 @@ export default class Trip {
     this._renderSort();
     this._renderEventsList();
     this._renderEvents();
+  }
+
+  _clearEventsList() {
+    Object
+      .values(this._eventPresenter)
+      .forEach((presenter) => presenter.destroy());
+    this._eventPresenter = {};
+
   }
 }
