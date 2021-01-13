@@ -2,14 +2,20 @@ import TripEventsItemView from '../view/trip-events-item.js';
 import TripEventsEditFormView from '../view/trip-events-edit-form.js';
 import {render, replace, remove, RenderPosition} from "../utils/render.js";
 
+const Mode = {
+  DEFAULT: `DEFAULT`,
+  EDITING: `EDITING`
+};
 
 export default class TripEvent {
-  constructor(eventsList, changeData) {
+  constructor(eventsList, changeData, changeMode) {
     this._eventsList = eventsList;
     this._changeData = changeData;
+    this._changeMode = changeMode;
 
     this._tripEventComponent = null;
     this._tripEventEditComponent = null;
+    this._mode = Mode.DEFAULT;
 
     this._handleEscapePress = this._handleEscapePress.bind(this);
     this._handleShowClick = this._handleShowClick.bind(this);
@@ -37,11 +43,11 @@ export default class TripEvent {
       return;
     }
 
-    if (this._eventsList.getElement().contains(prevTripEventComponent.getElement())) {
+    if (this._mode === Mode.DEFAULT) {
       replace(this._tripEventComponent, prevTripEventComponent);
     }
 
-    if (this._eventsList.getElement().contains(prevTripEventEditComponent.getElement())) {
+    if (this._mode === Mode.EDITING) {
       replace(this._tripEventEditComponent, prevTripEventEditComponent);
     }
 
@@ -54,14 +60,23 @@ export default class TripEvent {
     remove(this._tripEventEditComponent);
   }
 
+  resetView() {
+    if (this._mode !== Mode.DEFAULT) {
+      this._replaceFormToCard();
+    }
+  }
+
   _replaceCardToForm() {
     replace(this._tripEventEditComponent, this._tripEventComponent);
     document.addEventListener(`keydown`, this._handleEscapePress);
+    this._changeMode();
+    this._mode = Mode.EDITING;
   }
 
   _replaceFormToCard() {
     replace(this._tripEventComponent, this._tripEventEditComponent);
     document.removeEventListener(`keydown`, this._handleEscapePress);
+    this._mode = Mode.DEFAULT;
   }
 
   _handleEscapePress(evt) {
