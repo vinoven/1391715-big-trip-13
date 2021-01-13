@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import {nanoid} from "nanoid";
 import {getRandomInteger, shuffleArray} from "../utils/common";
 
 const EVENTS_TYPE = [`Taxi`, `Bus`, `Train`, `Ship`, `Transport`, `Drive`, `Flight`, `Check-in`, `Sightseeing`, `Restaurant`];
@@ -101,6 +102,7 @@ const getEventEndTime = (startTime, duration) => {
 
 export const generateTripEventsItem = () => {
 
+  const id = nanoid();
   const type = generateType();
   const destination = generateDestination();
   const description = generateDescription();
@@ -113,6 +115,7 @@ export const generateTripEventsItem = () => {
   const isFavourite = randomizeFavouriteFlag();
 
   return {
+    id,
     type,
     destination,
     description,
