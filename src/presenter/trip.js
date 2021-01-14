@@ -3,22 +3,26 @@ import TripEventsSortView from '../view/trip-events-sort.js';
 import TripEventPresenter from './event.js';
 import {render, RenderPosition} from "../utils/render.js";
 import {updateItem} from "../utils/common.js";
+import {SortType, sortByDay, sortByTime, sortByPrice} from "../utils/sort.js";
 
 
 export default class Trip {
   constructor(tripContainer) {
     this._tripContainer = tripContainer;
     this._eventPresenter = {};
+    this._defaultSortType = SortType.DAY;
 
     this._eventsListComponent = new TripEventsListView();
     this._eventsSortComponent = new TripEventsSortView();
 
     this._tripEventChangeHandler = this._tripEventChangeHandler.bind(this);
     this._modeChangeHandler = this._modeChangeHandler.bind(this);
+    this._sortTypeChangeHandler = this._sortTypeChangeHandler.bind(this);
   }
 
   init(tripEvents) {
     this._tripEvents = tripEvents.slice();
+    this._tripEvents.sort(sortByDay);
     this._renderTrip();
   }
 
@@ -29,8 +33,27 @@ export default class Trip {
 
   _modeChangeHandler() {
     Object
-    .values(this._eventPresenter)
-    .forEach((presenter) => presenter.resetView());
+      .values(this._eventPresenter)
+      .forEach((presenter) => presenter.resetView());
+  }
+
+  _sortTripEvents(sortType) {
+    switch (sortType) {
+      case SortType.DURATION:
+        this._tripEvents.sort(sortByTime);
+        break;
+      case SortType.PRICE:
+        this._tripEvents.sort(sortByPrice);
+        break;
+      default:
+        this._tripEvents.sort(sortByDay);
+    }
+  }
+
+  _sortTypeChangeHandler(sortType) {
+    this._sortTripEvents(sortType);
+    this._clearEventsList();
+    this._renderEvents();
   }
 
   _renderEventsList() {
@@ -49,6 +72,7 @@ export default class Trip {
 
   _renderSort() {
     render(this._tripContainer, this._eventsSortComponent, RenderPosition.BEFOREEND);
+    this._eventsSortComponent.setSortTypeChangeHandler(this._sortTypeChangeHandler);
   }
 
   _renderTrip() {
@@ -62,6 +86,5 @@ export default class Trip {
       .values(this._eventPresenter)
       .forEach((presenter) => presenter.destroy());
     this._eventPresenter = {};
-
   }
 }
